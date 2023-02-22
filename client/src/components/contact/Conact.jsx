@@ -8,7 +8,7 @@ const Conact = ({ contacts, query, loading }) => {
     return (
         <React.Fragment>
             <div className="row">
-
+                { }
                 {contacts.filter(contacts => contacts.name.toLowerCase().includes(query)).map(contact => {
                     return (
                         <div className="col-md-6 my-1" key={contact._id}>

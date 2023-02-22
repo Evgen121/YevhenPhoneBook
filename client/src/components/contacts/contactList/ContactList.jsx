@@ -8,7 +8,7 @@ const ContactList = () => {
     const [contacts, setContacts] = useState([]);
     const [loading, setLoading] = useState(false)
     const [currentPage, setCurrentPage] = useState(1)
-    const [contactsPerPage] = useState(3)
+    const [contactsPerPage] = useState(2)
     const [query, setQuery] = useState('')
 
 
