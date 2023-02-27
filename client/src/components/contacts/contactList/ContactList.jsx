@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 import axios from "axios";
 import Pgination from '../../Pgination';
-import Conact from '../../contact/Conact';
+import Conact from '../contact/Conact';
+import Select from '../../select/Select';
 
 const ContactList = () => {
     const [contacts, setContacts] = useState([]);
@@ -10,6 +11,7 @@ const ContactList = () => {
     const [currentPage, setCurrentPage] = useState(1)
     const [contactsPerPage] = useState(2)
     const [query, setQuery] = useState('')
+    const [selectedDort, setSelectedSort] = useState('')
 
 
     useEffect(() => {
@@ -17,6 +19,7 @@ const ContactList = () => {
             setLoading(true)
             const res = await axios.get('/contacts/')
             setContacts(res.data)
+            console.log(res)
             setLoading(false)
         }
         fetchContacts()
@@ -30,6 +33,12 @@ const ContactList = () => {
 
     //  change page
     const paginate = (pageNumber) => setCurrentPage(pageNumber)
+
+    //Sort contacts
+    const sortContacts = (sort) => {
+        setSelectedSort();
+        setContacts([...contacts].sort((a, b) => a[sort].localeCompare(b[sort])))
+    }
 
     return (
 
@@ -55,9 +64,18 @@ const ContactList = () => {
                                         </div>
                                     </div>
                                     <div className="col">
-                                        <div className="mb-2">
+                                        <div className="mb-2 d-flex justify-content-around"  >
                                             <input type="submit" className='btn btn-outline-primary fw-bold' value='Search' />
+                                            <Select
+                                                value={setSelectedSort}
+                                                onChange={sortContacts}
+                                                defaultValue='sorting by'
+                                                options={[
+                                                    { value: 'name', name: "by name" },
+                                                    { value: 'company', name: "by company" }
+                                                ]} />
                                         </div>
+
                                     </div>
 
                                 </form>
@@ -69,7 +87,9 @@ const ContactList = () => {
             </section>
             <section className='add-contact p-3'>
                 <div className="container">
-                    <Conact contacts={currentContacts} query={query} loading={loading} />
+                    {contacts.length != 0
+                        ? <Conact contacts={currentContacts} query={query} loading={loading} />
+                        : <h1>You don't have contacts</h1>}
                     <Pgination contactsPerPage={contactsPerPage}
                         paginate={paginate}
                         totalContacts={contacts.length} />

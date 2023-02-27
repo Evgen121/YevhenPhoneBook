@@ -31,6 +31,9 @@ const Conact = ({ contacts, query, loading }) => {
                                                 <li className='list-group-item list-group-item-action my-1 ' >
                                                     Email: <span className='fw-bold'>{contact.email}</span>
                                                 </li>
+                                                <li className='list-group-item list-group-item-action my-1 ' >
+                                                    Company: <span className='fw-bold'>{contact.company}</span>
+                                                </li>
                                             </ul>
                                         </div>
 
